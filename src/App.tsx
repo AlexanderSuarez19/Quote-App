@@ -1,24 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import {useState, useEffect} from 'react';
 import './App.css';
+import getNewAdvice from './lib/generateAdvice';
+import getRandomColor from './utilities/getRandomColor';
+import AdviceContainer from './AdviceContainer';
+import ShareContainer from './ShareContainer';
 
 function App() {
+  const [advice, setAdvice] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchInitialAdvice() {
+      const initialState = await getNewAdvice();
+      setAdvice(initialState);
+    }
+    fetchInitialAdvice();
+  }, []);
+
+    const buttonHandler = (str: string) =>{
+      getNewAdvice().then((newAdvice) =>{
+        setAdvice(newAdvice)
+      })
+      const backgroundColor = getRandomColor();
+      document.body.style.backgroundColor = backgroundColor;
+    }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1>Advice App</h1>
+      <AdviceContainer advice={advice} />
+      <button id="advice-btn" onClick={()=>buttonHandler(advice!)}>Another One Please</button>
+      <ShareContainer advice={advice} />
     </div>
   );
 }

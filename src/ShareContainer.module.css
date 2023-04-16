@@ -1,0 +1,19 @@
+.share-container {
+  margin-top: 20px;
+}
+
+#twitter-btn {
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+img {
+  height: 30px;
+  width: 30px;
+}
+
+#twitter-btn:hover {
+  filter: brightness(125%);
+}
